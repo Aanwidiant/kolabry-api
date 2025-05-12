@@ -1,0 +1,130 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model users {
+  id         Int         @id @default(autoincrement())
+  username   String      @unique
+  email      String      @unique
+  password   String
+  role       UserRole
+  created_at DateTime    @default(now())
+  updated_at DateTime    @updatedAt
+  campaigns  campaigns[]
+}
+
+model kols {
+  id                 Int            @id @default(autoincrement())
+  name               String
+  niche              NicheType
+  followers          Int
+  engagement_rate    Float
+  reach              Int
+  rate_card          Int
+  audience_male      Float
+  audience_female    Float
+  audience_age_range AgeRangeType
+  created_at         DateTime       @default(now())
+  updated_at         DateTime       @updatedAt
+  campaign_kols      campaign_kol[]
+  kol_reports        kol_reports[]
+}
+
+model kol_types {
+  id            Int         @id @default(autoincrement())
+  name          String
+  min_followers Int
+  max_followers Int?
+  campaigns     campaigns[]
+}
+
+model campaigns {
+  id                Int            @id @default(autoincrement())
+  user_id           Int
+  name              String
+  kol_type_id       Int
+  target_niche      NicheType
+  target_engagement Int
+  target_reach      Int
+  target_gender     GenderType
+  target_gender_min Float
+  target_age_range  AgeRangeType
+  start_date        DateTime
+  end_date          DateTime
+  created_at        DateTime       @default(now())
+  updated_at        DateTime       @updatedAt
+  campaign_kols     campaign_kol[]
+  kol_type          kol_types      @relation(fields: [kol_type_id], references: [id])
+  user              users          @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  kol_reports       kol_reports[]
+}
+
+model campaign_kol {
+  id          Int       @id @default(autoincrement())
+  campaign_id Int
+  kol_id      Int
+  created_at  DateTime  @default(now())
+  campaign    campaigns @relation(fields: [campaign_id], references: [id], onDelete: Cascade)
+  kol         kols      @relation(fields: [kol_id], references: [id], onDelete: Cascade)
+
+  @@unique([campaign_id, kol_id])
+}
+
+model kol_reports {
+  id            Int       @id @default(autoincrement())
+  campaign_id   Int
+  kol_id        Int
+  like_count    Int
+  comment_count Int
+  share_count   Int
+  save_count    Int
+  engagement    Int
+  reach         Int
+  er            Float
+  cpe           Float
+  final_score   Float?
+  ranking       Int?
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+  campaign      campaigns @relation(fields: [campaign_id], references: [id], onDelete: Cascade)
+  kol           kols      @relation(fields: [kol_id], references: [id], onDelete: Cascade)
+
+  @@unique([campaign_id, kol_id])
+}
+
+enum UserRole {
+  ADMIN
+  KOL_MANAGER
+  BRAND
+}
+
+enum GenderType {
+  MALE
+  FEMALE
+}
+
+enum NicheType {
+  FASHION
+  BEAUTY
+  TECH
+  PARENTING
+  LIFESTYLE
+  FOOD
+  HEALTH
+  EDUCATION
+  FINANCIAL
+}
+
+enum AgeRangeType {
+  AGE_13_17
+  AGE_18_24
+  AGE_25_34
+  AGE_35_44
+  AGE_45_54
+  AGE_55_PLUS
+}
