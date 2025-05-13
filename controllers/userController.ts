@@ -1,9 +1,9 @@
 import type { Context } from "hono";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { prisma } from "../config/db.ts";
+import { prisma } from "../config/db.js";
 import { Prisma, UserRole } from "@prisma/client";
-import { Pagination } from "../helpers/pagination.ts";
+import { Pagination } from "../helpers/pagination.js";
 
 const sign = jwt.sign;
 

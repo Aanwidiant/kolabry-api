@@ -1,9 +1,9 @@
 import type { Context } from "hono";
-import { prisma } from "../config/db.ts";
-import { validateKol } from "../validations/kolValidation.ts";
-import type { KolInput } from "../types/kolTypes.ts";
+import { prisma } from "../config/db.js";
+import { validateKol } from "../validations/kolValidation.js";
+import type { KolInput } from "../types/kolTypes.js";
 import { Prisma, NicheType } from "@prisma/client";
-import { Pagination } from "../helpers/pagination.ts";
+import { Pagination } from "../helpers/pagination.js";
 
 // Create KOL data
 export const createKol = async (c: Context) => {

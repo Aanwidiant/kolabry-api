@@ -4,8 +4,8 @@ import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import { prettyJSON } from "hono/pretty-json";
 import process from "node:process";
-import { User, Kol, KolType } from "./routes/index.ts";
-import { connectDB } from "./config/db.ts";
+import { User, Kol, KolType } from "./routes/index.js";
+import { connectDB } from "./config/db.js";
 
 const app = new Hono().basePath("/api");
 

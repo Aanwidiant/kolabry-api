@@ -1,8 +1,8 @@
 import type { Context } from "hono";
-import { prisma } from "../config/db.ts";
-import { validateKolType } from "../validations/kolTypeValidation.ts";
+import { prisma } from "../config/db.js";
+import { validateKolType } from "../validations/kolTypeValidation.js";
 import { Prisma } from "@prisma/client";
-import { Pagination } from "../helpers/pagination.ts";
+import { Pagination } from "../helpers/pagination.js";
 
 export const createKolType = async (c: Context) => {
   const body = await c.req.json();
