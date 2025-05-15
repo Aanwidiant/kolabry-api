@@ -1,4 +1,4 @@
-import type { KolTypeInput } from "../types/kolTypeTypes.ts";
+import type { KolTypeInput } from "../types/kolTypeTypes.js";
 
 export function validateKolType(
   data: KolTypeInput,

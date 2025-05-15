@@ -4,7 +4,7 @@ import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import { prettyJSON } from "hono/pretty-json";
 import process from "node:process";
-import { User, Kol, KolType } from "./routes/index.js";
+import { User, Kol, KolType, Campaign, Report } from "./routes/index.js";
 import { connectDB } from "./config/db.js";
 
 const app = new Hono().basePath("/api");
@@ -39,6 +39,8 @@ app.get("/healthcheck", (c) => {
 app.route("/user", User);
 app.route("/kol", Kol);
 app.route("/kol-type", KolType);
+app.route("/campaign", Campaign);
+app.route("/report", Report);
 
 const startServer = async () => {
   try {

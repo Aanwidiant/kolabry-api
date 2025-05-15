@@ -1,4 +1,4 @@
-import type { KolInput, NicheType, AgeRangeType } from "../types/kolTypes.ts";
+import type { KolInput, NicheType, AgeRangeType } from "../types/kolTypes.js";
 
 export function validateKol(data: Partial<KolInput>) {
   const requiredFields: (keyof KolInput)[] = [
